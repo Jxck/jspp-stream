@@ -30,8 +30,38 @@ suite('ltsv-stream', function() {
       };
 
       var ltsv = new LtsvStream();
-      var result = ltsv.parse(test_ltsv);
-      assert.deepEqual(result, expected);
+      var actual = ltsv.parse(test_ltsv);
+      assert.deepEqual(actual, expected);
+    });
+    test('option {stringify:false} returning json', function() {
+      var test_ltsv = [
+        'host:127.0.0.1',
+        'status:200'
+      ].join('\t');
+
+      var expected = {
+        host: '127.0.0.1',
+        status: '200'
+      };
+
+      var ltsv = new LtsvStream({stringify: false});
+      var actual = ltsv.parse(test_ltsv);
+      assert.deepEqual(actual, expected);
+    });
+    test('option {stringify:true} returning json string', function() {
+      var test_ltsv = [
+        'host:127.0.0.1',
+        'status:200'
+      ].join('\t');
+
+      var expected = {
+        host: '127.0.0.1',
+        status: '200'
+      };
+
+      var ltsv = new LtsvStream({stringify: true});
+      var actual = ltsv.parse(test_ltsv);
+      assert.deepEqual(actual, JSON.stringify(expected));
     });
   });
 });
