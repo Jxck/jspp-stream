@@ -50,6 +50,20 @@ suite('ltsv-stream', function() {
       var actual = ltsv.parse(test_ltsv);
       assert.deepEqual(actual, expected);
     });
+    test('parse() throws error if record has no separator', function() {
+      var test_ltsv = [
+        'host127.0.0.1', // had no separetor
+        'status:200'
+      ].join('\t');
+
+      var ltsv = new LtsvStream({stringify: false});
+      assert.throws(
+        function() {
+          ltsv.parse(test_ltsv);
+        },
+        /record has no separator/
+      );
+    });
     test('option {stringify:true} returning json string', function() {
       var test_ltsv = [
         'host:127.0.0.1',
