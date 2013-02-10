@@ -1,0 +1,20 @@
+{
+  "name": "ltsv-stream",
+  "version": "0.0.1",
+  "author": "Jxck <block.rxckin.beats@gmail.com>",
+  "description": "transfer parser stream of LTSV",
+  "main": "./index.js",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jxck/ltsv-stream.git"
+  },
+  "scripts": {
+    "lint": "fixjsstyle ./lib -r ./test",
+    "test": "./node_modules/.bin/mocha"
+  },
+  "devDependencies": {
+    "mocha": "~1.8"
+  }
+}
