@@ -80,9 +80,8 @@ suite('ltsv-stream', function() {
       assert.deepEqual(actual, JSON.stringify(expected));
     });
   });
-  suite('parser', function() {
-    test('parse every record into json', function(done) {
-
+  suite('stream', function() {
+    test('transform every record into json', function(done) {
       var Writable = require('stream').Writable;
       var util = require('util');
 
@@ -114,6 +113,17 @@ suite('ltsv-stream', function() {
         .pipe(ltsv)
         .pipe(spy)
         .on('finish', function() {
+          done();
+        });
+    });
+    test('error if record has invalid record', function(done) {
+      var Writable = require('stream').Writable;
+
+      var ltsv = new LtsvStream({stringify: false});
+      fs.createReadStream('test/test.invalid.log')
+        .pipe(ltsv)
+        .on('error', function(err) {
+          assert.deepEqual(err.message, 'record has no separator');
           done();
         });
     });
