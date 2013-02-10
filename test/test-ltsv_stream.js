@@ -1,6 +1,8 @@
+log = console.error;
 var assert = require('assert')
   , LtsvStream = require('../')
-  ;
+  , fs = require('fs');
+
 
 suite('ltsv-stream', function() {
   suite('parser', function() {
@@ -64,5 +66,42 @@ suite('ltsv-stream', function() {
       assert.deepEqual(actual, JSON.stringify(expected));
     });
   });
+  suite('parser', function() {
+    test('parse every record into json', function(done) {
+
+      var Writable = require('stream').Writable;
+      var util = require('util');
+
+      var expected = {
+        host: '127.0.0.1',
+        ident: '-',
+        user: 'frank',
+        time: '[10/Oct/2000:13:55:36 -0700]',
+        req: 'GET /apache_pb.gif HTTP/1.0',
+        status: '200',
+        size: '2326',
+        referer: 'http://www.example.com/start.html',
+        ua: 'Mozilla/4.08 [en] (Win98; I ;Nav)'
+      };
+
+      function SPY(options) {
+        Writable.call(this, options);
+      }
+      util.inherits(SPY, Writable);
+
+      SPY.prototype._write = function(chunk, cb) {
+        assert.deepEqual(chunk, expected);
+        cb(null);
+      };
+
+      var ltsv = new LtsvStream({stringify: false});
+      var spy = new SPY();
+      fs.createReadStream('test/test.log')
+        .pipe(ltsv)
+        .pipe(spy)
+        .on('finish', function() {
+          done();
+        });
+    });
+  });
 });
-// fs.createReadStream('test.log').pipe(ltsv_stream).pipe(process.stdout);
