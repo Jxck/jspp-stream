@@ -7,7 +7,7 @@ transfer stream of [LTSV](http://ltsv.org/) parser
 
 ## Usage
 
-```ruby
+```js
 var LtsvStream = require('ltsv-stream')
   , fs = require('fs');
 
@@ -15,10 +15,18 @@ var ltsv = new LtsvStream({stringify: true});
 fs.createReadStream('ltsv-access.log').pipe(ltsv).pipe(process.stdout);
 ```
 
+you can also use parse() for parse LTSV format record into josn.
+
+```js
+var ltsv = new LtsvStream();
+var record = ['host:127.0.0.1', 'ident:-'].join('\t');
+ltsv.parse(record); // { host: '127.0.0.1, ident: '-' }
+```
+
 
 ## Option
 
-```ruby
+```js
 var ltsv = new LtsvStream(option);
 ```
 
