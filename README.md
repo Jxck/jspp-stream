@@ -8,17 +8,17 @@ transfer stream of [LTSV](http://ltsv.org/) parser
 ## Usage
 
 ```js
-var LtsvStream = require('ltsv-stream')
+var ltsv2json = require('ltsv-stream').ltsv2json
   , fs = require('fs');
 
-var ltsv = new LtsvStream({stringify: true});
+var ltsv = new ltsv2json({stringify: true});
 fs.createReadStream('ltsv-access.log').pipe(ltsv).pipe(process.stdout);
 ```
 
 you can also use parse() for parse LTSV format record into josn.
 
 ```js
-var ltsv = new LtsvStream();
+var ltsv = new ltsv2json();
 var record = ['host:127.0.0.1', 'ident:-'].join('\t');
 ltsv.parse(record); // { host: '127.0.0.1, ident: '-' }
 ```
@@ -27,7 +27,7 @@ ltsv.parse(record); // { host: '127.0.0.1, ident: '-' }
 ## Option
 
 ```js
-var ltsv = new LtsvStream(option);
+var ltsv = new ltsv2json(option);
 ```
 
 - {stringify: false}: emit json object (default)

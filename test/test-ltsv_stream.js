@@ -1,10 +1,11 @@
 log = console.error;
-var assert = require('assert')
-  , LtsvStream = require('../')
-  , fs = require('fs');
+var assert = require('assert'),
+    LtsvStream = require('../')
+    fs = require('fs');
 
+var ltsv2json = LtsvStream.ltsv2json;
 
-suite('ltsv-stream', function() {
+suite('ltsv2json', function() {
   suite('parser', function() {
     test('parse() could parse access.log style LTSV', function() {
       var test_ltsv = [
@@ -31,7 +32,7 @@ suite('ltsv-stream', function() {
         ua: 'Mozilla/4.08 [en] (Win98; I ;Nav)'
       };
 
-      var ltsv = new LtsvStream();
+      var ltsv = new ltsv2json();
       var actual = ltsv.parse(test_ltsv);
       assert.deepEqual(actual, expected);
     });
@@ -46,7 +47,7 @@ suite('ltsv-stream', function() {
         status: '200'
       };
 
-      var ltsv = new LtsvStream({stringify: false});
+      var ltsv = new ltsv2json({stringify: false});
       var actual = ltsv.parse(test_ltsv);
       assert.deepEqual(actual, expected);
     });
@@ -56,7 +57,7 @@ suite('ltsv-stream', function() {
         'status:200'
       ].join('\t');
 
-      var ltsv = new LtsvStream({stringify: false});
+      var ltsv = new ltsv2json({stringify: false});
       assert.throws(
         function() {
           ltsv.parse(test_ltsv);
@@ -75,7 +76,7 @@ suite('ltsv-stream', function() {
         status: '200'
       };
 
-      var ltsv = new LtsvStream({stringify: true});
+      var ltsv = new ltsv2json({stringify: true});
       var actual = ltsv.parse(test_ltsv);
       assert.deepEqual(actual, JSON.stringify(expected));
     });
@@ -107,7 +108,7 @@ suite('ltsv-stream', function() {
         cb(null);
       };
 
-      var ltsv = new LtsvStream({stringify: false});
+      var ltsv = new ltsv2json({stringify: false});
       var spy = new SPY();
       fs.createReadStream('test/test.log')
         .pipe(ltsv)
@@ -119,7 +120,7 @@ suite('ltsv-stream', function() {
     test('error if record has invalid record', function(done) {
       var Writable = require('stream').Writable;
 
-      var ltsv = new LtsvStream({stringify: false});
+      var ltsv = new ltsv2json({stringify: false});
       fs.createReadStream('test/test.invalid.log')
         .pipe(ltsv)
         .on('error', function(err) {
