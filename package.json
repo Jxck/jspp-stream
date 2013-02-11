@@ -1,6 +1,6 @@
 {
   "name": "ltsv-stream",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Jxck <block.rxckin.beats@gmail.com>",
   "description": "transfer parser stream of LTSV",
   "main": "./index.js",
