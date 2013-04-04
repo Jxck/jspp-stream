@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+var JSPP = require('../').JSPP;
+var jspp = new JSPP();
+
+var arg = process.argv[2];
+
+if (!arg) { // read stdin
+  process.stdin.pipe(jspp).pipe(process.stdout);
+} else if (matches = arg.match(/^(https?):\/\//)) { // fetch https?
+  var http = require(matches[1])
+    , url = require('url')
+    , req = url.parse(arg)
+    ;
+    http.get(req, function (res) {
+      res.pipe(jspp).pipe(process.stdout);
+    });
+} else {  // read local file
+  var fs = require('fs');
+  fs.createReadStream(arg).pipe(jspp).pipe(process.stdout);
+}

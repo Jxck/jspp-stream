@@ -1,1 +1,1 @@
-module.exports = require('./lib/ltsv_stream');
+module.exports = require('./lib/jspp_stream');
