@@ -1,37 +1,29 @@
-[![Build Status](https://travis-ci.org/Jxck/ltsv-stream.png?branch=master)](https://travis-ci.org/Jxck/ltsv-stream)
-
 ## introduction
 
-transfer stream of [LTSV](http://ltsv.org/) parser
+JSON pretty print stream
 
 
 ## Usage
 
-```js
-var ltsv2json = require('ltsv-stream').ltsv2json
-  , fs = require('fs');
+### from stdin
 
-var ltsv = new ltsv2json({stringify: true});
-fs.createReadStream('ltsv-access.log').pipe(ltsv).pipe(process.stdout);
-```
-
-you can also use parse() for parse LTSV format record into josn.
-
-```js
-var ltsv = new ltsv2json();
-var record = ['host:127.0.0.1', 'ident:-'].join('\t');
-ltsv.parse(record); // { host: '127.0.0.1, ident: '-' }
+```sh
+$ cat test.json | jspp
 ```
 
 
-## Option
+### from file
 
-```js
-var ltsv = new ltsv2json(option);
+```sh
+$ jspp /path/to/file.json
 ```
 
-- {stringify: false}: emit json object (default)
-- {stringify: true}: emit json string
+
+### from web
+
+```sh
+$ jspp http://some.json.com
+```
 
 
 ## License
