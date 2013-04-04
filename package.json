@@ -1,14 +1,17 @@
 {
-  "name": "ltsv-stream",
-  "version": "0.0.2",
+  "name": "jspp-stream",
+  "version": "0.0.1",
   "author": "Jxck <block.rxckin.beats@gmail.com>",
-  "description": "transfer parser stream of LTSV",
+  "description": "json pretty print stream",
   "main": "./index.js",
   "license": "MIT",
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Jxck/ltsv-stream.git"
+    "url": "https://github.com/Jxck/jspp-stream.git"
+  },
+  "bin": {
+    "jspp": "./bin/jspp"
   },
   "scripts": {
     "lint": "fixjsstyle ./lib/* ./test/*",
